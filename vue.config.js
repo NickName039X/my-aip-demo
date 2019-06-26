@@ -1,3 +1,10 @@
+const path = require('path');
+
+function resolve(dir) {
+    return path.join(__dirname, dir);
+}
+
+
 module.exports = {
     publicPath: '/',
 
@@ -77,7 +84,13 @@ module.exports = {
             .rule('eslint')
             .exclude
             // .add('/Users/maybexia/Downloads/FE/community_built-in/src/lib')
-            .end()
+            .end();
+
+        config.resolve.symlinks(true);
+
+        config.resolve.alias
+          .set('@', resolve('src'))
+          .set('@assets',resolve('src/assets'))
     },
 
     // 配置高于chainWebpack中关于 css loader 的配置
@@ -86,7 +99,7 @@ module.exports = {
         modules: false,
 
         // 是否使用 css 分离插件 ExtractTextPlugin，采用独立样式文件载入，不采用 <style> 方式内联至 html 文件中
-        extract: true,
+        // extract: true,
 
         // 是否构建样式地图，false 将提高构建速度
         sourceMap: false,
@@ -99,8 +112,15 @@ module.exports = {
 
             postcss: {
                 // options here will be passed to postcss-loader
+            },
+            stylus: {
+                'resolve url': true,
+                'import': [
+                    './src/theme'
+                ]
             }
-        }
+        },
+
     },
 
     // All options for webpack-dev-server are supported
@@ -127,5 +147,10 @@ module.exports = {
     pwa: {},
 
     // 第三方插件配置
-    pluginOptions: {}
+    pluginOptions: {
+        'cube-ui': {
+            postCompile: true,
+            theme: true
+        }
+    }
 }
