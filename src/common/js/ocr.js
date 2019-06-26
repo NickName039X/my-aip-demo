@@ -23,7 +23,7 @@ client.generalBasic(image, options).then(function(result) {
 }).catch(function(err) {
 	// 如果发生网络错误
 	console.log(err);
-});;
+});
 
 var url = "https://pics1.baidu.com/feed/3812b31bb051f819d8784cf9f73b4c" +
 	"e82f73e7bc.jpeg?token=afb080f818c2d903680b57f50c859ddc&s=F8B877D9D6F7B3CC4AFD0A1F030050D6";
@@ -37,7 +37,7 @@ client.generalBasicUrl(url).then(function(result) {
 });
 
 // 如果有可选参数
-var options = {};
+options = {};
 options["language_type"] = "CHN_ENG";
 options["detect_direction"] = "true";
 options["detect_language"] = "true";
