@@ -65,8 +65,6 @@ module.exports = {
                 '.json',
                 '.wasm'
             ]
-
-
         }
     },
 
@@ -89,8 +87,8 @@ module.exports = {
         config.resolve.symlinks(true);
 
         config.resolve.alias
-          .set('@', resolve('src'))
-          .set('@assets',resolve('src/assets'))
+            .set('@', resolve('src'))
+            .set('@assets', resolve('src/assets'))
     },
 
     // 配置高于chainWebpack中关于 css loader 的配置
@@ -136,9 +134,18 @@ module.exports = {
 
         hotOnly: false,
 
-        proxy: null,
+        proxy: {
+            '/api': {
+                target: 'https://aip.baidubce.com/',
+                // ws: true,
+                changeOrigin: true,
+                pathRewrite: {//api代表target/api
+                    '^/api': '/'
+                }
+            }
+        },
 
-        before: app => {}
+        before: app => { }
     },
     // 构建时开启多进程处理 babel 编译
     parallel: require('os').cpus().length > 1,

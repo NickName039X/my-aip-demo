@@ -3,7 +3,7 @@ import './cube-ui'
 import App from './App.vue'
 import router from './router'
 import 'amfe-flexible'
-
+import auth from '@/api/utils/auth.js';
 Vue.config.productionTip = false
 
 new Vue({

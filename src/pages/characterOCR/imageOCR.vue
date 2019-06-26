@@ -8,7 +8,7 @@
                 <img :src="img" v-if="img">
             </label>
             <input type="file" accept="image/*"  @change="uploadImg" id="upload-input" class="upload-input"/>
-            <cube-button type="submit" class="recognition">识别</cube-button>
+            <cube-button type="submit" @click="recognition" class="recognition">识别</cube-button>
         </div>
 
 
@@ -18,6 +18,7 @@
 <script>
 import Header from '@/components/header'
 import { createImage } from '@/common/js/uploadPic'
+import ocr from '@/common/js/ocr'
 export default {
   name: "imageOCR",
   components: {Header},
@@ -31,7 +32,7 @@ export default {
             let files = e.target.files
             console.log('files', files)
             if (!files.length) return
-            createImage(files[0], this.uploadImgToServer)
+            createImage(files[0], this.uploadImgToServer);
             this.loading = true
         },
         uploadImgToServer (file) {
@@ -40,6 +41,12 @@ export default {
             this.img = file.src || file
             console.log(file)
         },
+
+        //识别
+        recognition(e){
+            console.log(ocr);
+            ocr.generalCharBasic(this.img);
+        }
 	}
 }
 </script>
