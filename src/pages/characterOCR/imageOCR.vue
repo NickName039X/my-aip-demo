@@ -9,51 +9,66 @@
             </label>
             <input type="file" accept="image/*"  @change="uploadImg" id="upload-input" class="upload-input"/>
             <cube-button type="submit" @click="recognition" class="recognition">识别</cube-button>
+						<p class="notice">*注：图片仅支持jpg/jpeg/png/bmp格式</p>
         </div>
 
-
+        <div class="result">
+            <p>识别结果：</p>
+            <ul>
+							<li v-for="(w, index) in words" :key="index">{{w.words}}</li>
+						</ul>
+        </div>
     </div>
 </template>
 
 <script>
 import Header from '@/components/header'
 import { createImage } from '@/common/js/uploadPic'
-import ocr from '@/common/js/ocr'
+import {accurateBasic} from '@/api/ocr'
 export default {
   name: "imageOCR",
   components: {Header},
 	data() {
 		return {
-            img: ''
+			img: '',
+			words: []
 		}
 	},
 	methods: {
-        uploadImg(e) {
-            let files = e.target.files
-            console.log('files', files)
-            if (!files.length) return
-            createImage(files[0], this.uploadImgToServer);
-            this.loading = true
-        },
-        uploadImgToServer (file) {
-            let formData = new FormData()
-            formData.append('files', file)
-            this.img = file.src || file
-            console.log(file)
-        },
-
-        //识别
-        recognition(e){
-            console.log(ocr);
-            ocr.generalCharBasic(this.img);
-        }
+    uploadImg(e) {
+			let files = e.target.files
+			console.log('files', files)
+			if (!files.length) return
+			createImage(files[0], this.uploadImgToServer)
+    },
+    uploadImgToServer (file) {
+			this.img = file
+    },
+		//识别
+		recognition(){
+			// accurateBasic(this.img).then((res) => {
+			// 	console.log(res.data);
+			// 	this.words = res.data.words_result
+			// }).catch((err) => {
+			// 	console.log(err)
+			// });
+			
+			accurateBasic({
+				data: {
+					image: this.img
+				},
+				call: (res) => {
+					this.words = res.words_result
+				}
+			})
+		}
 	}
 }
 </script>
 
 <style lang="stylus">
     .upload-img{
-        border: 1px solid red;
+        border: 1px solid #ddd;
         margin: 20px auto;
         width: 80%;
         height: 200px;
@@ -82,8 +97,13 @@ export default {
         }
 
     }
+		.notice{
+			font-size: 12px;
+			color: #333;
+			margin-left: 40px;
+		}
     .recognition{
-        margin: 20px auto;
+        margin: 20px auto 10px;
         width: 80%;
     }
     .upload-input{display: none;}
@@ -91,6 +111,23 @@ export default {
         i, p {
             display:none;
         }
+    }
+		.upload-area{
+			border-bottom: 1px solid #ccc;
+			padding-bottom: 20px;
+		}
+    .result{
+				margin-left: 20px;
+				font-size: 14px;
+				line-height: 2;
+				p {font-size: 16px; line-height: 2.5;}
+				ul{
+					text-indent: 20px;
+					li{
+						list-style-type: disc;
+						list-style-position: inside;
+					}
+				}
     }
 
 </style>

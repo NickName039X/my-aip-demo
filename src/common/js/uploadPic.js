@@ -49,6 +49,7 @@
 // }
 
 export function compress (img) {
+  console.log('压缩')
   let canvas = document.createElement('canvas')
   let ctx = canvas.getContext('2d')
   // 瓦片canvas
@@ -135,7 +136,7 @@ export function createImage (file, callback) {
     console.log('直接上传')
     callback(file)
   } else {
-    console.log('压缩')
+
     if (/^image/.test(file.type)) {
       let reader = new FileReader()
       reader.readAsDataURL(file)
@@ -144,12 +145,12 @@ export function createImage (file, callback) {
         let img = new Image()
         img.src = result
         img.onload = function () {
-          if(file.size <= (100 * 1024)) {
-            callback(img)
-          } else {
-            let data = compress(img)
-            callback(data)
-          }
+          // if(file.size <= (100 * 1024)) {
+            callback(result)
+          // } else {
+          //   let data = compress(img)
+          //   callback(data)
+          // }
 
         }
       }

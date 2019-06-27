@@ -1,19 +1,41 @@
 import request from './utils/request';
+import qs from 'qs';
 
-// 初始化-获取数据接口
-const getDetailApi = (data) => {
+// 通用文字识别
+export const getDetailApi = (image) => {
+  let token = localStorage.getItem('accessToken')
+  let i = image.split(',')
+
   return request({
-    url: 'rest/2.0/ocr/v1/general_basic',
-    method: 'get',
-    params: {
-      registerApp: data.registerApp,      //注册app
-      channelCode: data.channelCode,      //标识
-      sendCode: data.sendCode,            //发送标识
-      messageType: data.messageType       //1为注册页， 2为下载页
-    }
+    url: '/rest/2.0/ocr/v1/general_basic?access_token=' + token,
+    method: 'post',
+    data: qs.stringify({
+      image: i[1]
+    })
   });
 };
 
-export { 
+// 通用文字识别（高精度版）
+export const accurateBasic = (param) => {
+  let token = localStorage.getItem('accessToken')
+  let i = param.data.image.split(',')
 
+  // return request({
+  //   url: '/rest/2.0/ocr/v1/accurate_basic?access_token=' + token,
+  //   // url: '/rest/2.0/ocr/v1/accurate_basic',
+  //   method: 'post',
+  //   data: qs.stringify({
+  //     image: i[1]
+  //   })
+  // });
+
+  request({
+    url: '/rest/2.0/ocr/v1/accurate_basic?access_token=' + token,
+    method: 'post',
+    data: qs.stringify({
+           image: i[1]
+    }),
+    call: param.call,
+    fal: param.fal
+  })
 };

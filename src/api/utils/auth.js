@@ -13,5 +13,6 @@ axios({
         "client_secret": "wt3XU6LBWzsuH4cuSc9T4MWpgvgSdmmK"//设置SECRET_KEY
     })
 }).then(res => {
-    axios.defaults.headers['access_token'] = res.headers.access_token
+    localStorage.setItem('accessToken', res.data.access_token);
+    // axios.defaults.headers.common['access_token'] = res.data.access_token
 })
