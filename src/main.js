@@ -3,7 +3,7 @@ import './cube-ui'
 import App from './App.vue'
 import router from './router'
 import 'amfe-flexible'
-import '@/api/utils/auth.js'
+import './router/routerInterception'
 import '@/assets/fonts/iconfont/iconfont.css'
 
 Vue.config.productionTip = false

@@ -1,9 +1,11 @@
 import router from './index'
-const u = navigator.userAgent
+import getToken from '@/api/utils/auth'
 
 router.beforeEach((to, from, next) => {
+	let token = localStorage.getItem('accessToken')
 
-
-
-  next()
+	if(!token){
+		getToken()
+	}
+	next()
 })

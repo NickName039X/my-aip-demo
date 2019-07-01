@@ -129,8 +129,8 @@ function dataURItoBlob (dataURI) {
 }
 
 export function createImage (file, callback) {
-  if (file.size >= 10485760) {
-    this.$toast('图片大小不能超过10M')
+  if (file.size >= 4194304) {
+    this.$toast('图片大小不能超过4M')
   }
   if (!file || !window.FileReader) {
     console.log('直接上传')
@@ -145,12 +145,12 @@ export function createImage (file, callback) {
         let img = new Image()
         img.src = result
         img.onload = function () {
-          // if(file.size <= (100 * 1024)) {
+          if(file.size <= (100 * 1024)) {
             callback(result)
-          // } else {
-          //   let data = compress(img)
-          //   callback(data)
-          // }
+          } else {
+            let data = compress(img)
+            callback(data)
+          }
 
         }
       }
