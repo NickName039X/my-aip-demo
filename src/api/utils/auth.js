@@ -20,7 +20,8 @@ export default function getToken() {
         })
     }).then(res => {
         localStorage.setItem('accessToken', res.data.access_token);
-        localStorage.setItem('expiresIn', res.data.expires_in);
+        localStorage.setItem('tokenDate', new Date());
+
         // axios.defaults.headers.common['access_token'] = res.data.access_token
     })
 }

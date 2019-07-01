@@ -38,3 +38,4 @@ export const accurateBasic = (param) => {
     fal: param.fal
   })
 };
+
