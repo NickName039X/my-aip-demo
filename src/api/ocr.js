@@ -5,7 +5,6 @@ import qs from 'qs';
 export const getDetailApi = (image) => {
   let token = localStorage.getItem('accessToken')
   let i = image.split(',')
-
   return request({
     url: '/rest/2.0/ocr/v1/general_basic?access_token=' + token,
     method: 'post',
